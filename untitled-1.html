@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>connect</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/Chat.css">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Test</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #quote {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    #input {
+        width: 300px;
+        height: 40px;
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+    #result {
+        font-size: 1.2em;
+    }
+</style>
+</head>
+<body>
+<h1>Typing Speed Test</h1>
+<div id="quote">"The quick brown fox jumps over the lazy dog."</div>
+<input type="text" id="input" placeholder="Start typing here...">
+<div id="result"></div>
+<script>
+    const quote = "The quick brown fox jumps over the lazy dog.";
+    const input = document.getElementById('input');
+    const result = document.getElementById('result');
+    let startTime;
+
+    input.addEventListener('input', function() {
+        if (!startTime) {
+            startTime = new Date();
+        }
+        const typedText = input.value;
+        if (typedText === quote) {
+            const endTime = new Date();
+            const elapsedTime = (endTime - startTime) / 1000; // in seconds
+            const wordsCount = quote.split(' ').length;
+            const typingSpeed = Math.round(wordsCount / (elapsedTime / 60)); // in words per minute
+            result.textContent = `Your typing speed: ${typingSpeed} words per minute`;
+            startTime = null;
+        }
+    });
+</script>
+</body>
+</html>
+
+<body>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/bold-and-dark.js"></script>
+</body>
+
+</html>

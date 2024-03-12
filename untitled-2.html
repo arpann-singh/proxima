@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>connect</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/Chat.css">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Card Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .board {
+        display: flex;
+        flex-wrap: wrap;
+        width: 320px;
+        margin: 0 auto;
+    }
+    .card {
+        width: 60px;
+        height: 60px;
+        background-color: #ccc;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<h1>Memory Card Game</h1>
+<div class="board" id="board"></div>
+<script>
+    const symbols = ['🍎', '🍉', '🍌', '🍇', '🍒', '🍓', '🍍', '🥝'];
+    let cards = [...symbols, ...symbols];
+    let flippedCards = [];
+    let matchedCards = [];
+
+    function shuffleCards() {
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+    }
+
+    function renderBoard() {
+        const board = document.getElementById('board');
+        board.innerHTML = '';
+        cards.forEach((symbol, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.index = index;
+            card.textContent = symbol;
+            card.addEventListener('click', handleCardClick);
+            board.appendChild(card);
+        });
+    }
+
+    function handleCardClick(event) {
+        const card = event.target;
+        const index = card.dataset.index;
+        if (!flippedCards.includes(index) && !matchedCards.includes(index) && flippedCards.length < 2) {
+            card.classList.add('flipped');
+            flippedCards.push(index);
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+    }
+
+    function checkMatch() {
+        const [firstIndex, secondIndex] = flippedCards;
+        if (cards[firstIndex] === cards[secondIndex]) {
+            matchedCards.push(firstIndex, secondIndex);
+            if (matchedCards.length === cards.length) {
+                setTimeout(() => alert('Congratulations! You won!'), 500);
+            }
+        } else {
+            setTimeout(() => {
+                const firstCard = document.querySelector(`.card[data-index='${firstIndex}']`);
+                const secondCard = document.querySelector(`.card[data-index='${secondIndex}']`);
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+            }, 1000);
+        }
+        flippedCards = [];
+    }
+
+    shuffleCards();
+    renderBoard();
+</script>
+</body>
+</html>
+
+<body>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/bold-and-dark.js"></script>
+</body>
+
+</html>
